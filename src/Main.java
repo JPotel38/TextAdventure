@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -11,13 +12,14 @@ public class Main {
         // Game variables
         String[] enemies = {"Skeleton", "Zombie", "Orc", "Goblin", "Troll"};
         int enemiesKilled = 0;
+        String[] weapons = {"Iron sword", "Steel katana"};
         int maxEnemyHealth = 75;
         int enemyAttackDamage = 25;
+        WeaponsFactory weaponsFactory = new WeaponsFactory();
 
         // Player variables
         int health = 100;
         int mp = 50;
-        int attackDamage = 50;
         int spellDamage = 80;
         int numHealthPotions = 3;
         int numManaPotions = 1;
@@ -28,6 +30,12 @@ public class Main {
         int manaPotionRegenAmount = 15;
         int goldDropChance = 30; // Percentage
         int goldDropped = 40; // Percentage
+        Weapon weapon = weaponsFactory.makeWeapon("Iron sword");
+        int weaponDropChance = 50; // Percentage
+        int attackDamage = weapon.getDamage();
+
+        ArrayList<Weapon> weaponInventory = new ArrayList<>();
+        weaponInventory.add(weapon);
 
         boolean running = true;
 
@@ -55,7 +63,9 @@ public class Main {
                         System.out.println("\t#Your MP: " + mp);
                         break label;
                     case "2":
-                        System.out.println("\t#You have a iron sword: 50 dmg.");
+                        for (Weapon i : weaponInventory) {
+                            System.out.println("\t#" + i.getName() + " " + i.getDamage() + " damage");
+                        }
                         break label;
                     case "3":
                         if (numHealthPotions > 0) {
@@ -92,7 +102,6 @@ public class Main {
                             System.out.println("\t#" + enemy + "'s HP: " + enemyHealth);
                             System.out.println("\n\tWhat would you like to do ?");
                             System.out.println("\t1. Attack");
-
                             System.out.println("\t2. Run !");
 
                             input = in.nextLine();
@@ -108,7 +117,7 @@ public class Main {
                                         enemyHealth -= damageDealt;
                                         health -= damageTaken;
 
-                                        System.out.println("\t> You strike the " + enemy + " for " + damageDealt + " damage.");
+                                        System.out.println("\t> You strike the " + enemy + " with your " + weapon.getName() + " for " + damageDealt + " damage.");
                                         System.out.println("\t> You receive " + damageTaken + " in retaliation.");
 
                                         if (health < 1) {
@@ -123,7 +132,6 @@ public class Main {
 
                                         System.out.println("\t> You burn the " + enemy + " for " + damageDealt + " damage.");
                                         System.out.println("\t> You receive " + damageTaken + " in retaliation.");
-
                                         System.out.println("\t> You lose 10 mp. You have " + mp + " mp left.");
 
                                         if (health < 1) {
@@ -140,7 +148,7 @@ public class Main {
                         }
                         if (health < 1) {
                             System.out.println("You limp out of the dungeon, weak from the battle...");
-                            break label;
+                            break;
                         }
                         System.out.println("-----------------------------------------------");
                         System.out.println(" # " + enemy + " was defetead! #");
@@ -162,6 +170,12 @@ public class Main {
                             System.out.println(" # The " + enemy + " dropped " + goldDropped + " gold ! Lucky you ! #");
                             System.out.println((" # You now have " + goldAmount + " gold. # "));
                         }
+                        if (rand.nextInt(100) < weaponDropChance) {
+                            String weaponDropped = weapons[rand.nextInt(weapons.length)];
+                            Weapon weaponAdded = weaponsFactory.makeWeapon(weaponDropped);
+                            System.out.println(" # The " + enemy + " dropped a " + weaponDropped + " ! #");
+                            weaponInventory.add(weaponAdded);
+                        }
                         System.out.println("-----------------------------------------------");
                         System.out.println("What would you like to do now ?");
                         System.out.println("1. Continue wandering in the dungeon");
@@ -177,18 +191,17 @@ public class Main {
                         if (input.equals("1")) {
                             System.out.println("You continue your adventure !");
                         } else {
-                            System.out.println("You exit the dungeon, successful from your adventure! You killed " + enemiesKilled + " " +
-                                    "and leave with " + goldAmount + " gold !");
+                            System.out.println("You exit the dungeon, successful from your adventure ! You killed " + enemiesKilled + " enemy/ies and leave with " + goldAmount + " gold !");
+                            System.out.println("##############################");
+                            System.out.println("# Thanks for playing, dude ! #");
+                            System.out.println("##############################");
                             break label;
                         }
                         break;
                     default:
                         System.out.println("Invalid command !");
-                        continue;
+                        break;
                 }
-                System.out.println("##############################");
-                System.out.println("# Thanks for playing, dude ! #");
-                System.out.println("##############################");
             }
         }
     }
