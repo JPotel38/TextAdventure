@@ -9,7 +9,7 @@ public class Main {
         Random rand = new Random();
 
         // Game variables
-        String[] enemies = {"Skeleton", "Zombie", "Warrior", "Assassin"};
+        String[] enemies = {"Skeleton", "Zombie", "Orc", "Goblin", "Troll"};
         int enemiesKilled = 0;
         int maxEnemyHealth = 75;
         int enemyAttackDamage = 25;
@@ -34,7 +34,7 @@ public class Main {
         System.out.println("""
                 As a mercenary, you were hired to clean the local evil dungeon.
                 'Time to enter it, I guess', you think yourself.
-                An enemy is already waiting for you. It wilb be an amazing day !""");
+                An enemy is already waiting for you. It will be an amazing day !""");
 
         GAME:
         while (running) {
@@ -147,7 +147,7 @@ public class Main {
             }
             System.out.println("-----------------------------------------------");
             System.out.println("What would you like to do now ?");
-            System.out.println("1. Continue fighting");
+            System.out.println("1. Continue wandering in the dungeon");
             System.out.println("2. Exit dungeon");
 
             String input = in.nextLine();
