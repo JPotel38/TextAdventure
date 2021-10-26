@@ -10,6 +10,7 @@ public class Main {
 
         // Game variables
         String[] enemies = {"Skeleton", "Zombie", "Warrior", "Assassin"};
+        int enemiesKilled = 0;
         int maxEnemyHealth = 75;
         int enemyAttackDamage = 25;
 
@@ -20,10 +21,13 @@ public class Main {
         int spellDamage = 80;
         int numHealthPotions = 3;
         int numManaPotions = 1;
+        int goldAmount = 0;
         int healthPotionHealAmount = 30;
         int healthPotionDropChance = 50; // Percentage
         int manaPotionDropChance = 30; // Percentage
         int manaPotionRegenAmount = 15;
+        int goldDropChance = 30; // Percentage
+        int goldDropped = 40; // Percentage
 
         boolean running = true;
 
@@ -79,10 +83,11 @@ public class Main {
                             System.out.println("\t> You burn the " + enemy + " for " + damageDealt + " damage.");
                             System.out.println("\t> You receive " + damageTaken + " in retaliation.");
 
-                            System.out.println("\t> You lose 10 mp. You have " + mp + " left.");
+                            System.out.println("\t> You lose 10 mp. You have " + mp + " mp left.");
 
                             if (health < 1) {
                                 System.out.println("\t> You have taken too much damage !");
+                                break;
                             }
                         }
                         break;
@@ -122,6 +127,7 @@ public class Main {
             }
             System.out.println("-----------------------------------------------");
             System.out.println(" # " + enemy + " was defetead! #");
+            enemiesKilled++;
             System.out.println(" # You have " + health + " hp left. # ");
             if (rand.nextInt(100) < healthPotionDropChance) {
                 numHealthPotions++;
@@ -132,6 +138,12 @@ public class Main {
                 numManaPotions++;
                 System.out.println(" # The " + enemy + " dropped a mana potion! #");
                 System.out.println((" # You now have " + numManaPotions + " mana potion(s). # "));
+            }
+            if (rand.nextInt(100) < goldDropChance && enemy.equals(enemies[2]) || enemy.equals(enemies[3])) {
+                goldDropped = rand.nextInt(goldDropped);
+                goldAmount += goldDropped;
+                System.out.println(" # The " + enemy + " dropped " + goldDropped + " gold ! Lucky you ! #");
+                System.out.println((" # You now have " + goldAmount + " gold. # "));
             }
             System.out.println("-----------------------------------------------");
             System.out.println("What would you like to do now ?");
@@ -148,7 +160,8 @@ public class Main {
             if (input.equals("1")) {
                 System.out.println("You continue your adventure !");
             } else {
-                System.out.println("You exit the dungeon, successful from your adventure!");
+                System.out.println("You exit the dungeon, successful from your adventure! You killed " + enemiesKilled + " " +
+                        "and leave with " + goldAmount + " gold !");
                 break;
             }
         }
