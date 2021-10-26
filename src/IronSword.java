@@ -1,7 +1,7 @@
 public class IronSword extends Weapon{
 
     public IronSword() {
-        setName("Iron Sword");
+        setName("Iron sword");
         setCost(15);
         setDamage(50);
     }
