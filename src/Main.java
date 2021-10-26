@@ -128,7 +128,6 @@ public class Main {
 
                                         if (health < 1) {
                                             System.out.println("\t> You have taken too much damage !");
-                                            break;
                                         }
                                     }
                                 }
@@ -185,8 +184,7 @@ public class Main {
                         break;
                     default:
                         System.out.println("Invalid command !");
-                        input = in.nextLine();
-                        break;
+                        continue;
                 }
                 System.out.println("##############################");
                 System.out.println("# Thanks for playing, dude ! #");
