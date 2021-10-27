@@ -54,21 +54,21 @@ public class Main {
             while (health > 0) {
                 System.out.println("-----------------------------------------------");
 
-                System.out.println("\t1. Status");
+                System.out.println("\t1. Keep advancing");
                 System.out.println("\t2. Inventory");
                 System.out.println("\t3. Drink health potion");
                 System.out.println("\t4. Drink mana potion");
-                System.out.println("\t5. Keep advancing");
+                System.out.println("\t5. Status");
                 String input = in.nextLine();
 
                 switch (input) {
-                    case "1":
-                        System.out.println("\t#Your HP: " + health);
-                        System.out.println("\t#Your MP: " + mp);
+                    case "5":
+                        System.out.println("\t# Your HP: " + health);
+                        System.out.println("\t# Your MP: " + mp);
                         break label;
                     case "2":
                         for (Weapon i : weaponInventory) {
-                            System.out.println("\t#" + i.getName() + " " + i.getDamage() + " damage");
+                            System.out.println("\t# " + i.getName() + " " + i.getDamage() + " damage");
                         }
                         break label;
                     case "3":
@@ -93,7 +93,7 @@ public class Main {
                             System.out.println("You have no mana potions left ! Defeat enemies to have a chance to get one !");
                         }
                         break label;
-                    case "5":
+                    case "1":
                         System.out.println("-----------------------------------------------");
 
                         Enemy enemy = enemiesFactory.makeEnemy(enemies[rand.nextInt(enemies.length)]);
@@ -104,9 +104,9 @@ public class Main {
                         System.out.println("\t# " + enemyName + " has appeared ! #\n");
 
                         while (enemyHealth > 0) {
-                            System.out.println("\t#Your HP: " + health);
-                            System.out.println("\t#Your MP: " + mp);
-                            System.out.println("\t#" + enemyName + "'s HP: " + enemyHealth);
+                            System.out.println("\t# Your HP: " + health);
+                            System.out.println("\t# Your MP: " + mp);
+                            System.out.println("\t# " + enemyName + "'s HP: " + enemyHealth);
                             System.out.println("\n\tWhat would you like to do ?");
                             System.out.println("\t1. Attack");
                             System.out.println("\t2. Run !");
@@ -155,7 +155,7 @@ public class Main {
                         }
                         if (health < 1) {
                             System.out.println("You limp out of the dungeon, weak from the battle...");
-                            break;
+                            continue GAME;
                         }
                         System.out.println("-----------------------------------------------");
                         System.out.println(" # " + enemyName + " was defetead! #");
@@ -202,7 +202,7 @@ public class Main {
                             System.out.println("##############################");
                             System.out.println("# Thanks for playing, dude ! #");
                             System.out.println("##############################");
-                            break label;
+                            continue GAME;
                         }
                         break;
                     default:
