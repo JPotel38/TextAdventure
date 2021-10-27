@@ -1,7 +1,8 @@
 import enemies.EnemiesFactory;
 import enemies.Enemy;
+import weapons.Weapon;
+import weapons.WeaponsFactory;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -57,7 +58,7 @@ public class Main {
                 System.out.println("\t2. Inventory");
                 System.out.println("\t3. Drink health potion");
                 System.out.println("\t4. Drink mana potion");
-                System.out.println("\t5. Advance");
+                System.out.println("\t5. Keep advancing");
                 String input = in.nextLine();
 
                 switch (input) {

@@ -1,3 +1,5 @@
+package weapons;
+
 public class WeaponsFactory {
 
     public Weapon makeWeapon(String newWeaponType) {
@@ -6,7 +8,7 @@ public class WeaponsFactory {
         return switch (newWeaponType) {
             case "Iron sword" -> new IronSword();
             case "Iron shield" -> new IronShield();
-            case "Bow" -> new Bow();
+            case "weapons.Bow" -> new Bow();
             case "Steel katana" -> new SteelKatana();
             default -> null;
         };

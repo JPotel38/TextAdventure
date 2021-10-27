@@ -1,3 +1,5 @@
+package weapons;
+
 public class IronSword extends Weapon{
 
     public IronSword() {

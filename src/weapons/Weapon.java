@@ -1,3 +1,5 @@
+package weapons;
+
 public abstract class Weapon extends WeaponsFactory{
 
     private String name;
