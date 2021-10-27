@@ -1,3 +1,7 @@
+import enemies.EnemiesFactory;
+import enemies.Enemy;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -13,9 +17,8 @@ public class Main {
         String[] enemies = {"Skeleton", "Zombie", "Orc", "Goblin", "Troll"};
         int enemiesKilled = 0;
         String[] weapons = {"Iron sword", "Steel katana"};
-        int maxEnemyHealth = 75;
-        int enemyAttackDamage = 25;
         WeaponsFactory weaponsFactory = new WeaponsFactory();
+        EnemiesFactory enemiesFactory = new EnemiesFactory();
 
         // Player variables
         int health = 100;
@@ -92,14 +95,17 @@ public class Main {
                     case "5":
                         System.out.println("-----------------------------------------------");
 
-                        int enemyHealth = rand.nextInt(maxEnemyHealth);
-                        String enemy = enemies[rand.nextInt(enemies.length)];
-                        System.out.println("\t# " + enemy + " has appeared ! #\n");
+                        Enemy enemy = enemiesFactory.makeEnemy(enemies[rand.nextInt(enemies.length)]);
+                        String enemyName = enemy.getName();
+                        int enemyHealth = enemy.getHp();
+                        int enemyAttackDamage = enemy.getDamage();
+
+                        System.out.println("\t# " + enemyName + " has appeared ! #\n");
 
                         while (enemyHealth > 0) {
                             System.out.println("\t#Your HP: " + health);
                             System.out.println("\t#Your MP: " + mp);
-                            System.out.println("\t#" + enemy + "'s HP: " + enemyHealth);
+                            System.out.println("\t#" + enemyName + "'s HP: " + enemyHealth);
                             System.out.println("\n\tWhat would you like to do ?");
                             System.out.println("\t1. Attack");
                             System.out.println("\t2. Run !");
@@ -117,7 +123,7 @@ public class Main {
                                         enemyHealth -= damageDealt;
                                         health -= damageTaken;
 
-                                        System.out.println("\t> You strike the " + enemy + " with your " + weapon.getName() + " for " + damageDealt + " damage.");
+                                        System.out.println("\t> You strike the " + enemyName + " with your " + weapon.getName() + " for " + damageDealt + " damage.");
                                         System.out.println("\t> You receive " + damageTaken + " in retaliation.");
 
                                         if (health < 1) {
@@ -130,7 +136,7 @@ public class Main {
                                         health -= damageTaken;
                                         mp -= 10;
 
-                                        System.out.println("\t> You burn the " + enemy + " for " + damageDealt + " damage.");
+                                        System.out.println("\t> You burn the " + enemyName + " for " + damageDealt + " damage.");
                                         System.out.println("\t> You receive " + damageTaken + " in retaliation.");
                                         System.out.println("\t> You lose 10 mp. You have " + mp + " mp left.");
 
@@ -140,7 +146,7 @@ public class Main {
                                     }
                                 }
                                 case "2" -> {
-                                    System.out.println("you run away from the " + enemy + " !");
+                                    System.out.println("you run away from the " + enemyName + " !");
                                     continue GAME;
                                 }
                                 default -> System.out.println("\tInvalid command !");
@@ -151,29 +157,29 @@ public class Main {
                             break;
                         }
                         System.out.println("-----------------------------------------------");
-                        System.out.println(" # " + enemy + " was defetead! #");
+                        System.out.println(" # " + enemyName + " was defetead! #");
                         enemiesKilled++;
                         System.out.println(" # You have " + health + " hp left. # ");
                         if (rand.nextInt(100) < healthPotionDropChance) {
                             numHealthPotions++;
-                            System.out.println(" # The " + enemy + " dropped a health potion! #");
+                            System.out.println(" # The " + enemyName + " dropped a health potion! #");
                             System.out.println((" # You now have " + numHealthPotions + " health potion(s). # "));
                         }
                         if (rand.nextInt(100) < manaPotionDropChance) {
                             numManaPotions++;
-                            System.out.println(" # The " + enemy + " dropped a mana potion! #");
+                            System.out.println(" # The " + enemyName + " dropped a mana potion! #");
                             System.out.println((" # You now have " + numManaPotions + " mana potion(s). # "));
                         }
-                        if (rand.nextInt(100) < goldDropChance && (enemy.equals(enemies[2]) || enemy.equals(enemies[3]))) {
+                        if (rand.nextInt(100) < goldDropChance && (enemyName.equals(enemies[2]) || enemyName.equals(enemies[3]))) {
                             goldDropped = rand.nextInt(goldDropped);
                             goldAmount += goldDropped;
-                            System.out.println(" # The " + enemy + " dropped " + goldDropped + " gold ! Lucky you ! #");
+                            System.out.println(" # The " + enemyName + " dropped " + goldDropped + " gold ! Lucky you ! #");
                             System.out.println((" # You now have " + goldAmount + " gold. # "));
                         }
                         if (rand.nextInt(100) < weaponDropChance) {
                             String weaponDropped = weapons[rand.nextInt(weapons.length)];
                             Weapon weaponAdded = weaponsFactory.makeWeapon(weaponDropped);
-                            System.out.println(" # The " + enemy + " dropped a " + weaponDropped + " ! #");
+                            System.out.println(" # The " + enemyName + " dropped a " + weaponDropped + " ! #");
                             weaponInventory.add(weaponAdded);
                         }
                         System.out.println("-----------------------------------------------");
